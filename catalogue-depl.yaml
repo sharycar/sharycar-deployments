@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sharycar-catal-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sharycar-catal
+  template:
+    metadata:
+      labels:
+        app: sharycar-catal
+    spec:
+      containers:
+      - name: sharycar-catalogue-container
+        image: jkrajnc11/sharycar-microservice-catalogue
+        ports:
+        - containerPort: 8082
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sharycar-catal-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: sharycar-catal
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8082

@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sharycar-pay-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sharycar-pay
+  template:
+    metadata:
+      labels:
+        app: sharycar-pay
+    spec:
+      containers:
+      - name: sharycar-authenticetion-container
+        image: jkrajnc11/sharycar-microservice-payments
+        ports:
+        - containerPort: 8083
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sharycar-pay-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: sharycar-pay
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8083
