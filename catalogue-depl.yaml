@@ -17,6 +17,12 @@ spec:
         image: jkrajnc11/sharycar-microservice-catalogue
         ports:
         - containerPort: 8082
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 3
         
 ---
 apiVersion: v1
